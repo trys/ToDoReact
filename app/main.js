@@ -10,7 +10,7 @@ import App from './components/App';
  */
 var routes = (
     <Router history={browserHistory}>
-        <Route path="/" component={App} />
+        <Route path="*" component={App} />
     </Router>
 )
 ReactDOM.render( routes, document.querySelector('#main'));

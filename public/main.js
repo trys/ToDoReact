@@ -277,7 +277,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var routes = _react2.default.createElement(
     _reactRouter.Router,
     { history: _reactRouter.browserHistory },
-    _react2.default.createElement(_reactRouter.Route, { path: '/', component: _App2.default })
+    _react2.default.createElement(_reactRouter.Route, { path: '*', component: _App2.default })
 );
 _reactDom2.default.render(routes, document.querySelector('#main'));
 
