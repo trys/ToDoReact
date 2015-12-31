@@ -11,7 +11,18 @@ class Task extends React.Component {
 
 	render = () => {
 		var task = this.props.details;
-	    return <li><input type="checkbox" checked={task.completed} onChange={this.updateTask} />{task.name}</li>
+		var index = this.props.index;
+		var taskClass = 'task';
+		if( task.completed ) {
+			taskClass += ' task-completed';
+		}
+	    return (
+	    	<li className={taskClass}>
+	    		<input type="checkbox" checked={task.completed} onChange={this.updateTask} id="task_{index}" />
+	    		<label htmlFor="task_{index}">{task.name}</label>
+	    		<button onClick={this.props.removeTask.bind(null, index)}>&times;</button>
+	    	</li>
+	    )
 	}
 }
 

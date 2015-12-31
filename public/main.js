@@ -38,7 +38,7 @@ var App = (function (_React$Component) {
 		var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this));
 
 		_this.renderTask = function (key) {
-			return _react2.default.createElement(_Task2.default, { key: key, index: key, details: _this.state.tasks[key], updateTask: _this.updateTask });
+			return _react2.default.createElement(_Task2.default, { key: key, index: key, details: _this.state.tasks[key], updateTask: _this.updateTask, removeTask: _this.removeTask });
 		};
 
 		_this.updateTask = function (key) {
@@ -54,25 +54,9 @@ var App = (function (_React$Component) {
 			});
 		};
 
-		_this.renderCompletedTasks = function (tasks) {
-			if (Object.keys(tasks).length === 0) {
-				return;
-			}
-
-			return _react2.default.createElement(
-				'div',
-				null,
-				_react2.default.createElement(
-					'h4',
-					null,
-					'Completed Tasks'
-				),
-				_react2.default.createElement(
-					'ul',
-					null,
-					Object.keys(tasks).map(_this.renderTask)
-				)
-			);
+		_this.removeTask = function (key) {
+			delete _this.state.tasks[key];
+			_this.setState({ tasks: _this.state.tasks });
 		};
 
 		_this.state = {
@@ -84,19 +68,6 @@ var App = (function (_React$Component) {
 	_createClass(App, [{
 		key: 'render',
 		value: function render() {
-			var tasks = [],
-			    completed = [],
-			    allTasks = this.state.tasks;
-
-			Object.keys(allTasks).map(function (key) {
-				var task = allTasks[key];
-				if (task.completed) {
-					completed[key] = task;
-				} else {
-					tasks[key] = task;
-				}
-			});
-
 			return _react2.default.createElement(
 				'div',
 				null,
@@ -108,9 +79,8 @@ var App = (function (_React$Component) {
 				_react2.default.createElement(
 					'ul',
 					null,
-					Object.keys(tasks).map(this.renderTask)
+					Object.keys(this.state.tasks).map(this.renderTask)
 				),
-				this.renderCompletedTasks(completed),
 				_react2.default.createElement(_TaskForm2.default, { addTask: this.addTask })
 			);
 		}
@@ -247,13 +217,13 @@ var NotFound = (function (_React$Component) {
 exports.default = NotFound;
 
 },{"react":224}],4:[function(require,module,exports){
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _react = require("react");
+var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -285,11 +255,25 @@ var Task = (function (_React$Component) {
 			_this.props.updateTask(_this.props.index);
 		}, _this.render = function () {
 			var task = _this.props.details;
+			var index = _this.props.index;
+			var taskClass = 'task';
+			if (task.completed) {
+				taskClass += ' task-completed';
+			}
 			return _react2.default.createElement(
-				"li",
-				null,
-				_react2.default.createElement("input", { type: "checkbox", checked: task.completed, onChange: _this.updateTask }),
-				task.name
+				'li',
+				{ className: taskClass },
+				_react2.default.createElement('input', { type: 'checkbox', checked: task.completed, onChange: _this.updateTask, id: 'task_{index}' }),
+				_react2.default.createElement(
+					'label',
+					{ htmlFor: 'task_{index}' },
+					task.name
+				),
+				_react2.default.createElement(
+					'button',
+					{ onClick: _this.props.removeTask.bind(null, index) },
+					'×'
+				)
 			);
 		}, _temp), _possibleConstructorReturn(_this, _ret);
 	}
