@@ -6,6 +6,9 @@ var browserify = require('browserify');
 var watchify = require('watchify');
 var babelify = require('babelify');
 
+var uglify = require('gulp-uglify');
+var rename = require('gulp-rename');
+
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 var historyApiFallback = require('connect-history-api-fallback');
@@ -59,7 +62,30 @@ gulp.task('browser-sync', function() {
     });
 });
 
-gulp.task('build', function() { return compile(); });
+
+gulp.task( 'build',
+  function () {
+    return gulp.src(
+        [
+          './public/main.js'
+        ]
+      )
+      .pipe(
+        uglify()
+      )
+      .on( 'error', function ( err ) {
+        console.log('Error: ' + err );
+        this.emit( 'end' );
+      })
+      .pipe(
+        rename('main.min.js')
+      )
+      .pipe(
+        gulp.dest( './public' )
+      )
+  }
+);
+
 gulp.task('watch', function() { return watch(); });
 
 gulp.task('default', ['watch', 'browser-sync'], function () {
