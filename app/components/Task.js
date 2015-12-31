@@ -13,13 +13,14 @@ class Task extends React.Component {
 		var task = this.props.details;
 		var index = this.props.index;
 		var taskClass = 'task';
-		if( task.completed ) {
+		var taskId = 'task_' + index;
+		if ( task.completed ) {
 			taskClass += ' task-completed';
 		}
 	    return (
 	    	<li className={taskClass}>
-	    		<input type="checkbox" checked={task.completed} onChange={this.updateTask} id="task_{index}" />
-	    		<label htmlFor="task_{index}">{task.name}</label>
+	    		<input type="checkbox" checked={task.completed} onChange={this.updateTask} id={taskId} />
+	    		<label htmlFor={taskId}>{task.name}</label>
 	    		<button onClick={this.props.removeTask.bind(null, index)}>&times;</button>
 	    	</li>
 	    )

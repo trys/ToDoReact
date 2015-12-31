@@ -21,8 +21,8 @@ class TaskForm extends React.Component {
 	    	<div className="task-form">
 	    		<h3>Add a task</h3>
 	    		<form onSubmit={this.createTask} ref="taskForm">
-	    			<input type="text" ref="taskName" placeholder="Task" />
-	    			<button type="submit">Add Task</button>
+	    			<input type="text" ref="taskName" />
+	    			<button type="submit">+</button>
 	    		</form>
 	    	</div>
 	    )

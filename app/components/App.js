@@ -16,8 +16,7 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        
-        var localStorageRef = localStorage.getItem( 'task-' + this.props.params.todoId );
+        var localStorageRef = localStorage.getItem( 'task-list' );
         if ( localStorageRef ) {
             this.setState({
                 tasks: JSON.parse( localStorageRef )
@@ -26,7 +25,7 @@ class App extends React.Component {
     }
 
     componentWillUpdate( nextProps, nextState ) {
-        localStorage.setItem('task-' + this.props.params.todoId, JSON.stringify( nextState.tasks ) );
+        localStorage.setItem( 'task-list', JSON.stringify( nextState.tasks ) );
     }
 
     renderTask = ( key ) => {
@@ -53,7 +52,7 @@ class App extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="wrap tasks">
                 <h1>Tasks</h1>
                 <ul>
                     {Object.keys(this.state.tasks).map(this.renderTask)}
