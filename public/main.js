@@ -63,7 +63,7 @@ var App = (function (_React$Component) {
 				'div',
 				null,
 				_react2.default.createElement(
-					'h2',
+					'h4',
 					null,
 					'Completed Tasks'
 				),
@@ -97,15 +97,13 @@ var App = (function (_React$Component) {
 				}
 			});
 
-			console.log(tasks, completed);
-
 			return _react2.default.createElement(
 				'div',
 				null,
 				_react2.default.createElement(
 					'h1',
 					null,
-					'Tasks to comple'
+					'Tasks'
 				),
 				_react2.default.createElement(
 					'ul',

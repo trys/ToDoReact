@@ -39,7 +39,7 @@ class App extends React.Component {
 
 		return (
 			<div>
-				<h2>Completed Tasks</h2>
+				<h4>Completed Tasks</h4>
 				<ul>
 					{Object.keys(tasks).map(this.renderTask)}
 				</ul>
@@ -61,11 +61,9 @@ class App extends React.Component {
 			}
 		});
 
-		console.log(tasks, completed);
-
 	    return (
 	    	<div>
-		    	<h1>Tasks to comple</h1>
+		    	<h1>Tasks</h1>
 		    	<ul>
 		    		{Object.keys(tasks).map(this.renderTask)}
 		    	</ul>
