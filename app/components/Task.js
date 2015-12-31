@@ -4,7 +4,7 @@
 
 import React from 'react';
 
-class Task extends React.Component {
+export default class Task extends React.Component {
 	updateTask = () => {
 		this.props.updateTask( this.props.index )
 	}
@@ -25,6 +25,11 @@ class Task extends React.Component {
 	    	</li>
 	    )
 	}
-}
 
-export default Task;
+	static propTypes = {
+		updateTask: React.PropTypes.func.isRequired,
+		details: React.PropTypes.object.isRequired,
+		index: React.PropTypes.string.isRequired,
+		removeTask: React.PropTypes.func.isRequired
+	}
+}

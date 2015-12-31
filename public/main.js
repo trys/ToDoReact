@@ -172,6 +172,12 @@ var Task = (function (_React$Component) {
 	return Task;
 })(_react2.default.Component);
 
+Task.propTypes = {
+	updateTask: _react2.default.PropTypes.func.isRequired,
+	details: _react2.default.PropTypes.object.isRequired,
+	index: _react2.default.PropTypes.string.isRequired,
+	removeTask: _react2.default.PropTypes.func.isRequired
+};
 exports.default = Task;
 
 },{"react":218}],3:[function(require,module,exports){
@@ -250,6 +256,9 @@ var TaskForm = (function (_React$Component) {
 	return TaskForm;
 })(_react2.default.Component);
 
+TaskForm.propTypes = {
+	addTask: _react2.default.PropTypes.func.isRequired
+};
 exports.default = TaskForm;
 
 },{"react":218}],4:[function(require,module,exports){

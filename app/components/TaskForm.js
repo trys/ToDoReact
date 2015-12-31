@@ -4,7 +4,7 @@
 
 import React from 'react';
 
-class TaskForm extends React.Component {
+export default class TaskForm extends React.Component {
 
 	createTask = ( event ) => {
 		event.preventDefault();
@@ -27,6 +27,8 @@ class TaskForm extends React.Component {
 	    	</div>
 	    )
 	}
-}
 
-export default TaskForm;
+	static propTypes = {
+		addTask: React.PropTypes.func.isRequired
+	}
+}
