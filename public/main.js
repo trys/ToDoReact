@@ -4,7 +4,7 @@
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+    value: true
 });
 
 var _react = require('react');
@@ -30,63 +30,79 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 */
 
 var App = (function (_React$Component) {
-	_inherits(App, _React$Component);
+    _inherits(App, _React$Component);
 
-	function App() {
-		_classCallCheck(this, App);
+    function App() {
+        _classCallCheck(this, App);
 
-		var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this));
+        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this));
 
-		_this.renderTask = function (key) {
-			return _react2.default.createElement(_Task2.default, { key: key, index: key, details: _this.state.tasks[key], updateTask: _this.updateTask, removeTask: _this.removeTask });
-		};
+        _this.renderTask = function (key) {
+            return _react2.default.createElement(_Task2.default, { key: key, index: key, details: _this.state.tasks[key], updateTask: _this.updateTask, removeTask: _this.removeTask });
+        };
 
-		_this.updateTask = function (key) {
-			_this.state.tasks[key].completed = !_this.state.tasks[key].completed;
-			_this.setState({ tasks: _this.state.tasks });
-		};
+        _this.updateTask = function (key) {
+            _this.state.tasks[key].completed = !_this.state.tasks[key].completed;
+            _this.setState({ tasks: _this.state.tasks });
+        };
 
-		_this.addTask = function (task) {
-			event.preventDefault();
-			_this.state.tasks['task-' + new Date().getTime()] = task;
-			_this.setState({
-				tasks: _this.state.tasks
-			});
-		};
+        _this.addTask = function (task) {
+            event.preventDefault();
+            _this.state.tasks['task-' + new Date().getTime()] = task;
+            _this.setState({
+                tasks: _this.state.tasks
+            });
+        };
 
-		_this.removeTask = function (key) {
-			delete _this.state.tasks[key];
-			_this.setState({ tasks: _this.state.tasks });
-		};
+        _this.removeTask = function (key) {
+            delete _this.state.tasks[key];
+            _this.setState({ tasks: _this.state.tasks });
+        };
 
-		_this.state = {
-			tasks: {}
-		};
-		return _this;
-	}
+        _this.state = {
+            tasks: {}
+        };
+        return _this;
+    }
 
-	_createClass(App, [{
-		key: 'render',
-		value: function render() {
-			return _react2.default.createElement(
-				'div',
-				null,
-				_react2.default.createElement(
-					'h1',
-					null,
-					'Tasks'
-				),
-				_react2.default.createElement(
-					'ul',
-					null,
-					Object.keys(this.state.tasks).map(this.renderTask)
-				),
-				_react2.default.createElement(_TaskForm2.default, { addTask: this.addTask })
-			);
-		}
-	}]);
+    _createClass(App, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
 
-	return App;
+            var localStorageRef = localStorage.getItem('task-' + this.props.params.todoId);
+            if (localStorageRef) {
+                this.setState({
+                    tasks: JSON.parse(localStorageRef)
+                });
+            }
+        }
+    }, {
+        key: 'componentWillUpdate',
+        value: function componentWillUpdate(nextProps, nextState) {
+            localStorage.setItem('task-' + this.props.params.todoId, JSON.stringify(nextState.tasks));
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                    'h1',
+                    null,
+                    'Tasks'
+                ),
+                _react2.default.createElement(
+                    'ul',
+                    null,
+                    Object.keys(this.state.tasks).map(this.renderTask)
+                ),
+                _react2.default.createElement(_TaskForm2.default, { addTask: this.addTask })
+            );
+        }
+    }]);
+
+    return App;
 })(_react2.default.Component);
 
 exports.default = App;
