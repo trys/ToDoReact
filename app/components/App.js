@@ -15,8 +15,21 @@ class App extends React.Component {
 		}
 	}
 
-	renderTask() {
-		return <Task key={key} />
+	renderTask = ( key ) => {
+		return <Task key={key} index={key} details={this.state.tasks[key]} updateTask={this.updateTask} />
+	}
+
+	updateTask = ( key ) => {
+		this.state.tasks[key].completed = ! ( this.state.tasks[key].completed )
+		this.setState({ tasks: this.state.tasks });
+	}
+
+	addTask = ( task ) => {
+		event.preventDefault();
+		this.state.tasks[ 'task-' + ( new Date() ).getTime() ] = task;
+		this.setState({
+			tasks: this.state.tasks
+		});
 	}
 
 	render() {
@@ -26,7 +39,7 @@ class App extends React.Component {
 		    	<ul>
 		    		{Object.keys(this.state.tasks).map(this.renderTask)}
 		    	</ul>
-		    	<TaskForm />
+		    	<TaskForm addTask={this.addTask} />
 		    </div>
 	    )
 	}

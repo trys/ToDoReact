@@ -37,6 +37,23 @@ var App = (function (_React$Component) {
 
 		var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this));
 
+		_this.renderTask = function (key) {
+			return _react2.default.createElement(_Task2.default, { key: key, index: key, details: _this.state.tasks[key], updateTask: _this.updateTask });
+		};
+
+		_this.updateTask = function (key) {
+			_this.state.tasks[key].completed = !_this.state.tasks[key].completed;
+			_this.setState({ tasks: _this.state.tasks });
+		};
+
+		_this.addTask = function (task) {
+			event.preventDefault();
+			_this.state.tasks['task-' + new Date().getTime()] = task;
+			_this.setState({
+				tasks: _this.state.tasks
+			});
+		};
+
 		_this.state = {
 			tasks: {}
 		};
@@ -44,11 +61,6 @@ var App = (function (_React$Component) {
 	}
 
 	_createClass(App, [{
-		key: 'renderTask',
-		value: function renderTask() {
-			return _react2.default.createElement(_Task2.default, { key: key });
-		}
-	}, {
 		key: 'render',
 		value: function render() {
 			return _react2.default.createElement(
@@ -64,7 +76,7 @@ var App = (function (_React$Component) {
 					null,
 					Object.keys(this.state.tasks).map(this.renderTask)
 				),
-				_react2.default.createElement(_TaskForm2.default, null)
+				_react2.default.createElement(_TaskForm2.default, { addTask: this.addTask })
 			);
 		}
 	}]);
@@ -200,15 +212,13 @@ var NotFound = (function (_React$Component) {
 exports.default = NotFound;
 
 },{"react":224}],4:[function(require,module,exports){
-'use strict';
-
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _react = require('react');
+var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -226,21 +236,28 @@ var Task = (function (_React$Component) {
 	_inherits(Task, _React$Component);
 
 	function Task() {
+		var _Object$getPrototypeO;
+
+		var _temp, _this, _ret;
+
 		_classCallCheck(this, Task);
 
-		return _possibleConstructorReturn(this, Object.getPrototypeOf(Task).apply(this, arguments));
-	}
-
-	_createClass(Task, [{
-		key: 'render',
-		value: function render() {
-			return _react2.default.createElement(
-				'h2',
-				null,
-				'Task'
-			);
+		for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+			args[_key] = arguments[_key];
 		}
-	}]);
+
+		return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Task)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.updateTask = function () {
+			_this.props.updateTask(_this.props.index);
+		}, _this.render = function () {
+			var task = _this.props.details;
+			return _react2.default.createElement(
+				"li",
+				null,
+				_react2.default.createElement("input", { type: "checkbox", checked: task.completed, onChange: _this.updateTask }),
+				task.name
+			);
+		}, _temp), _possibleConstructorReturn(_this, _ret);
+	}
 
 	return Task;
 })(_react2.default.Component);
@@ -248,7 +265,7 @@ var Task = (function (_React$Component) {
 exports.default = Task;
 
 },{"react":224}],5:[function(require,module,exports){
-'use strict';
+"use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
@@ -256,7 +273,7 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _react = require('react');
+var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -274,18 +291,48 @@ var TaskForm = (function (_React$Component) {
 	_inherits(TaskForm, _React$Component);
 
 	function TaskForm() {
+		var _Object$getPrototypeO;
+
+		var _temp, _this, _ret;
+
 		_classCallCheck(this, TaskForm);
 
-		return _possibleConstructorReturn(this, Object.getPrototypeOf(TaskForm).apply(this, arguments));
+		for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+			args[_key] = arguments[_key];
+		}
+
+		return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(TaskForm)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.createTask = function (event) {
+			event.preventDefault();
+			var task = {
+				name: _this.refs.taskName.value,
+				completed: false
+			};
+			_this.props.addTask(task);
+			_this.refs.taskForm.reset();
+		}, _temp), _possibleConstructorReturn(_this, _ret);
 	}
 
 	_createClass(TaskForm, [{
-		key: 'render',
+		key: "render",
 		value: function render() {
 			return _react2.default.createElement(
-				'h3',
-				null,
-				'Add a task'
+				"div",
+				{ className: "task-form" },
+				_react2.default.createElement(
+					"h3",
+					null,
+					"Add a task"
+				),
+				_react2.default.createElement(
+					"form",
+					{ onSubmit: this.createTask, ref: "taskForm" },
+					_react2.default.createElement("input", { type: "text", ref: "taskName", placeholder: "Task" }),
+					_react2.default.createElement(
+						"button",
+						{ type: "submit" },
+						"Add Task"
+					)
+				)
 			);
 		}
 	}]);
