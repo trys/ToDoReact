@@ -32,13 +32,44 @@ class App extends React.Component {
 		});
 	}
 
+	renderCompletedTasks = ( tasks ) => {
+		if ( Object.keys( tasks ).length === 0 ) {
+			return
+		}
+
+		return (
+			<div>
+				<h2>Completed Tasks</h2>
+				<ul>
+					{Object.keys(tasks).map(this.renderTask)}
+				</ul>
+			</div>
+		)
+	}
+
 	render() {
+		var tasks = [],
+			completed = [],
+			allTasks = this.state.tasks;
+
+		Object.keys(allTasks).map(function (key) {
+			var task = allTasks[key];
+			if ( task.completed ) {
+				completed[key] = task;
+			} else {
+				tasks[key] = task;
+			}
+		});
+
+		console.log(tasks, completed);
+
 	    return (
 	    	<div>
-		    	<h1>Tasks</h1>
+		    	<h1>Tasks to comple</h1>
 		    	<ul>
-		    		{Object.keys(this.state.tasks).map(this.renderTask)}
+		    		{Object.keys(tasks).map(this.renderTask)}
 		    	</ul>
+		    	{this.renderCompletedTasks(completed)}
 		    	<TaskForm addTask={this.addTask} />
 		    </div>
 	    )

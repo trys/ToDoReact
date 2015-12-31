@@ -54,6 +54,27 @@ var App = (function (_React$Component) {
 			});
 		};
 
+		_this.renderCompletedTasks = function (tasks) {
+			if (Object.keys(tasks).length === 0) {
+				return;
+			}
+
+			return _react2.default.createElement(
+				'div',
+				null,
+				_react2.default.createElement(
+					'h2',
+					null,
+					'Completed Tasks'
+				),
+				_react2.default.createElement(
+					'ul',
+					null,
+					Object.keys(tasks).map(_this.renderTask)
+				)
+			);
+		};
+
 		_this.state = {
 			tasks: {}
 		};
@@ -63,19 +84,35 @@ var App = (function (_React$Component) {
 	_createClass(App, [{
 		key: 'render',
 		value: function render() {
+			var tasks = [],
+			    completed = [],
+			    allTasks = this.state.tasks;
+
+			Object.keys(allTasks).map(function (key) {
+				var task = allTasks[key];
+				if (task.completed) {
+					completed[key] = task;
+				} else {
+					tasks[key] = task;
+				}
+			});
+
+			console.log(tasks, completed);
+
 			return _react2.default.createElement(
 				'div',
 				null,
 				_react2.default.createElement(
 					'h1',
 					null,
-					'Tasks'
+					'Tasks to comple'
 				),
 				_react2.default.createElement(
 					'ul',
 					null,
-					Object.keys(this.state.tasks).map(this.renderTask)
+					Object.keys(tasks).map(this.renderTask)
 				),
+				this.renderCompletedTasks(completed),
 				_react2.default.createElement(_TaskForm2.default, { addTask: this.addTask })
 			);
 		}
