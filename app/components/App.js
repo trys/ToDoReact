@@ -38,7 +38,6 @@ class App extends React.Component {
     }
 
     addTask = ( task ) => {
-        event.preventDefault();
         this.state.tasks[ 'task-' + ( new Date() ).getTime() ] = task;
         this.setState({
             tasks: this.state.tasks

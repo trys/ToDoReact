@@ -47,7 +47,6 @@ var App = (function (_React$Component) {
         };
 
         _this.addTask = function (task) {
-            event.preventDefault();
             _this.state.tasks['task-' + new Date().getTime()] = task;
             _this.setState({
                 tasks: _this.state.tasks
@@ -219,8 +218,12 @@ var TaskForm = (function (_React$Component) {
 
 		return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(TaskForm)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.createTask = function (event) {
 			event.preventDefault();
+			var name = _this.refs.taskName.value;
+			if (!name) {
+				return;
+			}
 			var task = {
-				name: _this.refs.taskName.value,
+				name: name,
 				completed: false
 			};
 			_this.props.addTask(task);

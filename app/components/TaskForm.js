@@ -8,8 +8,12 @@ export default class TaskForm extends React.Component {
 
 	createTask = ( event ) => {
 		event.preventDefault();
+		var name = this.refs.taskName.value;
+		if ( ! name ) {
+			return;
+		}
 		var task = {
-			name: this.refs.taskName.value,
+			name: name,
 			completed: false
 		}
 		this.props.addTask( task );
